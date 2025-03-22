@@ -59,7 +59,8 @@ int open_nb_socket(const char* addr, const char* port, char *MACaddress) {
         char buffer[6*3];
         int i;
         for (i = 0; i < 6; ++i) {
-          sprintf(&buffer[i*3], "%02x:", (unsigned char) s.ifr_addr.sa_data[i]);
+          
+            (&buffer[i*3], "%02x:", (unsigned char) s.ifr_addr.sa_data[i]);
           //printf(" %02x", (unsigned char) s.ifr_addr.sa_data[i]);
         }
         //printf("\r\n");

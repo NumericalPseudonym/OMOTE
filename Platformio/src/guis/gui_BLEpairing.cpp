@@ -219,16 +219,16 @@ void create_textarea(lv_obj_t* tab, lv_coord_t width, lv_coord_t height, lv_coor
 }
 
 void create_tab_content_blepairing(lv_obj_t* tab) {
-  create_button       (tab, 100,  24,   0,   0, "start advert.",  0);
-  create_button       (tab, 100,  24, 112,   0, "stop advert.",   1);
+  create_button       (tab, 100,  24,   0,   0, "Start Advert",  0);
+  create_button       (tab, 100,  24, 112,   0, "Stop Advert",   1);
   
   create_dropdownPeers(tab, 212,  24,   0,  30,                   2);
 
-  create_button       (tab, 100,  24,   0,  60, "print connected", 3);
-  create_button       (tab, 100,  24, 112,  60, "disconnect",     4);
+  create_button       (tab, 100,  24,   0,  60, "Print Connected", 3);
+  create_button       (tab, 100,  24, 112,  60, "Disconnect",     4);
 
-  create_button       (tab, 100,  24,   0,  90, "print bonds",    5);
-  create_button       (tab, 100,  24, 112,  90, "delete bonds",   6);
+  create_button       (tab, 100,  24,   0,  90, "Print Bonds",    5);
+  create_button       (tab, 100,  24, 112,  90, "Delete Bonds",   6);
 
   create_textarea     (tab, 212, 124,   0, 120                     );
 

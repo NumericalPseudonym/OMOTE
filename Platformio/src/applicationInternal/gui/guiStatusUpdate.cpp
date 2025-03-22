@@ -11,23 +11,23 @@ void updateBatteryStatusOnGUI() {
   bool battery_ischarging;
   get_battery_status(&battery_voltage, &battery_percentage, &battery_ischarging);
 
-  char buffer1[20];
-  snprintf(buffer1, sizeof(buffer1), "Voltage: %.2f V", (float)battery_voltage / 1000);
+  char batteryVoltageDescription[20];
+  snprintf(batteryVoltageDescription, sizeof(batteryVoltageDescription), "Voltage: %.2f V", (float)battery_voltage / 1000);
 
   // GUI settings
-  if (objBattSettingsVoltage    != NULL) {lv_label_set_text_fmt(objBattSettingsVoltage, "%s", buffer1);}
+  if (objBattSettingsVoltage    != NULL) {lv_label_set_text_fmt(objBattSettingsVoltage, "%s", batteryVoltageDescription);}
   if (objBattSettingsPercentage != NULL) {lv_label_set_text_fmt(objBattSettingsPercentage, "Percentage: %d%%", battery_percentage);}
   //lv_label_set_text_fmt(objBattSettingsIscharging, "Is charging: %s",  battery_ischarging ? "yes" : "no");
 
   // GUI status bar at the top
-  char buffer2[12];
+  char batteryPercentageDescription[12];
   // Voltage and percentage
-  // snprintf(buffer2, sizeof(buffer2), "%.1fV, %d%%", (float)getBatteryVoltage() / 1000, battery_percentage);
+  // snprintf(batteryPercentageDescription, sizeof(batteryPercentageDescription), "%.1fV, %d%%", (float)getBatteryVoltage() / 1000, battery_percentage);
   // only percentage
-  snprintf(buffer2, sizeof(buffer2), "%d%%", battery_percentage);
-  for (int i=0; i<strlen(buffer2); i++) {
-    if (buffer2[i] == '.') {
-      buffer2[i] = ',';
+  snprintf(batteryPercentageDescription, sizeof(batteryPercentageDescription), "%d%%", battery_percentage);
+  for (int i=0; i<strlen(batteryPercentageDescription); i++) {
+    if (batteryPercentageDescription[i] == '.') {
+      batteryPercentageDescription[i] = ',';
     }
   }
 
@@ -36,20 +36,20 @@ void updateBatteryStatusOnGUI() {
       // if (BattPercentageLabel != NULL) {lv_label_set_text(BattPercentageLabel, "");}
       // lv_label_set_text_fmt(BattPercentageLabel, "%d%%", battery_percentage);
       // lv_label_set_text_fmt(BattPercentageLabel, "%.1f, %d%%", (float)getBatteryVoltage() / 1000, battery_percentage);
-      if (BattPercentageLabel != NULL) {lv_label_set_text(BattPercentageLabel, buffer2);}
+      if (BattPercentageLabel != NULL) {lv_label_set_text(BattPercentageLabel, batteryPercentageDescription);}
       if (BattIconLabel != NULL) {lv_label_set_text(BattIconLabel, LV_SYMBOL_USB);}
     } else
   #endif
   {
     // Update status bar battery indicator
     // lv_label_set_text_fmt(BattPercentageLabel, "%.1f, %d%%", (float)getBatteryVoltage() / 1000, battery_percentage);
-    if (BattPercentageLabel != NULL) {lv_label_set_text(BattPercentageLabel, buffer2);}
+    if (BattPercentageLabel != NULL) {lv_label_set_text(BattPercentageLabel, batteryPercentageDescription);}
     if (BattIconLabel != NULL) {
            if(battery_percentage > 95) lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_FULL);
       else if(battery_percentage > 75) lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_3);
       else if(battery_percentage > 50) lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_2);
       else if(battery_percentage > 25) lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_1);
-      else                                 lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_EMPTY);
+      else                             lv_label_set_text(BattIconLabel, LV_SYMBOL_BATTERY_EMPTY);
     }
   }
 

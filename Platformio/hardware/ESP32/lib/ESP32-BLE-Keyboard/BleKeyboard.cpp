@@ -570,7 +570,7 @@ void BleKeyboard::onConnect(NimBLEServer* pServer, NimBLEConnInfo& connInfo, std
     #if !defined(NIMBLE_ARDUINO_2_x)
     NimBLEConnInfo connInfo = pServer->getPeerInfo(0);
     #endif
-    snprintf(buffer, sizeof(buffer), "BleKeyboard: onConnect with name: client %s%s, id %s%s, handle %u, isBonded %d, name %s",
+    spnrintf(buffer, sizeof(buffer), "BleKeyboard: onConnect with name: client %s%s, id %s%s, handle %u, isBonded %d, name %s",
       NimBLEAddress(connInfo.getAddress()).toString().c_str(),
       this->getAddressTypeStr(connInfo.getAddress()).c_str(),
       NimBLEAddress(connInfo.getIdAddress()).toString().c_str(),
