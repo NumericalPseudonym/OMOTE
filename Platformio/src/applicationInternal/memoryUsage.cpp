@@ -82,7 +82,7 @@ void doLogMemoryUsage() {
   #endif
 
   if (showMemoryUsage) {
-    char buffer[80];
+    char memoryUsageDescription[80];
     std::string ESP32HeapWarnBegin = "#00ff00 "; // green
     std::string ESP32HeapWarnEnd   = "#";
     std::string LVGLMemorWarnBegin = "#00ff00 "; // green
@@ -98,26 +98,26 @@ void doLogMemoryUsage() {
     #if LV_MEM_CUSTOM != 0
       #ifdef SHOW_USED_MEMORY_INSTEAD_OF_FREE_IN_GUI
 
-      snprintf(buffer, sizeof(buffer), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).c_str()                                                                                           , systemHeapSize-freeSystemHeap, systemHeapSize, float(systemHeapSize-freeSystemHeap) / systemHeapSize * 100);
+      snprintf(memoryUsageDescription, sizeof(memoryUsageDescription), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).c_str()                                                                                           , systemHeapSize-freeSystemHeap, systemHeapSize, float(systemHeapSize-freeSystemHeap) / systemHeapSize * 100);
       #else
-      snprintf(buffer, sizeof(buffer), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).c_str()                                                                                           , freeSystemHeap,                systemHeapSize, float(freeSystemHeap)                / systemHeapSize * 100);
+      snprintf(memoryUsageDescription, sizeof(memoryUsageDescription), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).c_str()                                                                                           , freeSystemHeap,                systemHeapSize, float(freeSystemHeap)                / systemHeapSize * 100);
       #endif
     #else
       #ifdef SHOW_USED_MEMORY_INSTEAD_OF_FREE_IN_GUI
-      snprintf(buffer, sizeof(buffer), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).append(" / ").append(LVGLMemorWarnBegin).append("%lu/%lu (%d%%)").append(LVGLMemorWarnEnd).c_str(), systemHeapSize-freeSystemHeap, systemHeapSize, float(systemHeapSize-freeSystemHeap) / systemHeapSize * 100, mon.total_size - mon.free_size, mon.total_size, mon.used_pct);
+      snprintf(memoryUsageDescription, sizeof(memoryUsageDescription), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).append(" / ").append(LVGLMemorWarnBegin).append("%lu/%lu (%d%%)").append(LVGLMemorWarnEnd).c_str(), systemHeapSize-freeSystemHeap, systemHeapSize, float(systemHeapSize-freeSystemHeap) / systemHeapSize * 100, mon.total_size - mon.free_size, mon.total_size, mon.used_pct);
       #else
-      snprintf(buffer, sizeof(buffer), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).append(" / ").append(LVGLMemorWarnBegin).append("%lu/%lu (%d%%)").append(LVGLMemorWarnEnd).c_str(), freeSystemHeap,                systemHeapSize, float(freeSystemHeap)                / systemHeapSize * 100, mon.free_size,                  mon.total_size, 100-mon.used_pct);
+      snprintf(memoryUsageDescription, sizeof(memoryUsageDescription), ESP32HeapWarnBegin.append("%lu/%lu (%.0f%%)").append(ESP32HeapWarnEnd).append(" / ").append(LVGLMemorWarnBegin).append("%lu/%lu (%d%%)").append(LVGLMemorWarnEnd).c_str(), freeSystemHeap,                systemHeapSize, float(freeSystemHeap)                / systemHeapSize * 100, mon.free_size,                  mon.total_size, 100-mon.used_pct);
       #endif
     #endif
 
-    for (int i=0; i<strlen(buffer); i++) {
-      if (buffer[i] == '.') {
-        buffer[i] = ',';
+    for (int i=0; i<strlen(memoryUsageDescription); i++) {
+      if (memoryUsageDescription[i] == '.') {
+        memoryUsageDescription[i] = ',';
       }
     }
     if (MemoryUsageLabel != NULL) {
-      omote_log_v("inside doLogMemoryUsage: will do GUI log %s\r\n", buffer);
-      lv_label_set_text(MemoryUsageLabel, buffer);
+      omote_log_v("inside doLogMemoryUsage: will do GUI log %s\r\n", memoryUsageDescription);
+      lv_label_set_text(MemoryUsageLabel, memoryUsageDescription);
     }
   } else {
     if (MemoryUsageLabel != NULL) {

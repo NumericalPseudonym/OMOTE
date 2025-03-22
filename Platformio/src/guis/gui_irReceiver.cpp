@@ -177,7 +177,8 @@ void create_tab_content_irReceiver(lv_obj_t* tab) {
 
   printMQTTmessage();
 
-  #endif // ENABLE_KEYBOARD_MQTT
+#endif // ENABLE_KEYBOARD_MQTT
+
 }
 
 void notify_tab_before_delete_irReceiver(void) {

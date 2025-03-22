@@ -23,7 +23,7 @@
   #include <SPI.h>
 #endif
 
-#define ENABLE_WIFI // Comment out to diable connected features
+// #define ENABLE_WIFI // Comment out to diable connected features
 
 // Pin assignment ---------------------------------------------------------------------------------
 

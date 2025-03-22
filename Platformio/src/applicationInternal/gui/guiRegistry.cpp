@@ -28,7 +28,7 @@ void register_gui(
   ) {
   
   if (registered_guis_byName_map.count(a_name) > 0) {
-    omote_log_e("ERROR!!!: you cannot register two guis having the same name '%s'\r\n", a_name.c_str());
+    omote_log_e("ERROR!!!: you cannot register two guis having the same name '%s'.\r\n", a_name.c_str());
     return;
   }
 

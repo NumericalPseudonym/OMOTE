@@ -52,7 +52,7 @@ static void timout_event_cb(lv_event_t* e){
     case 5: {set_sleepTimeout( 600000); break;}
     case 6: {set_sleepTimeout(3600000); break;}
   }
-  omote_log_v("New timeout: %lu ms\r\n", get_sleepTimeout());
+  omote_log_v("New timeout: %u ms\r\n", get_sleepTimeout());
   setLastActivityTimestamp();
   // save preferences now, otherwise if you set a very big timeout and upload your firmware again, it never got saved
   save_preferences();
@@ -217,14 +217,14 @@ void create_tab_content_settings(lv_obj_t* tab) {
 
   // Memory statistics ------------------------------------------------------------------------
   menuLabel = lv_label_create(tab);
-  lv_label_set_text(menuLabel, "Memory usage");
+  lv_label_set_text(menuLabel, "Memory Usage");
   menuBox = lv_obj_create(tab);
   lv_obj_set_size(menuBox, lv_pct(100), 48);
   lv_obj_set_style_bg_color(menuBox, color_primary, LV_PART_MAIN);
   lv_obj_set_style_border_width(menuBox, 0, LV_PART_MAIN);
   
   menuLabel = lv_label_create(menuBox);
-  lv_label_set_text(menuLabel, "Show mem usage");
+  lv_label_set_text(menuLabel, "Show Usage");
   lv_obj_align(menuLabel, LV_ALIGN_TOP_LEFT, 0, 3);
   lv_obj_t* memoryUsageToggle = lv_switch_create(menuBox);
   lv_obj_set_size(memoryUsageToggle, 40, 22);

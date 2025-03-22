@@ -29,8 +29,10 @@ enum IRprotocols {
   IR_PROTOCOL_SONY = 3,
   IR_PROTOCOL_RC5 = 4,
   IR_PROTOCOL_DENON = 5,
-  IR_PROTOCOL_SAMSUNG36 = 6
+  IR_PROTOCOL_SAMSUNG36 = 6,
+  IR_PROTOCOL_PRONTO = 7,
 };
+
 void sendIRcode_HAL(int protocol, std::list<std::string> commandPayloads, std::string additionalPayload) {
 
   // first determine if data was provided by commandPayload or by additionalPayload. Only one of these will be used.
@@ -112,6 +114,35 @@ void sendIRcode_HAL(int protocol, std::list<std::string> commandPayloads, std::s
       data = std::stoull(dataStr, &sz, 0);
       Serial.printf("execute: will send IR SAMSUNG36, data %s (%" PRIu64 ")\r\n", dataStr.c_str(), data);
       IrSender.sendSamsung36(data);
+      break;
+    }
+
+    case IR_PROTOCOL_PRONTO: {
+      // Pronto codes are typically represented in hexadecimal. You will need to convert the code to an array of 
+      // integers, and calculate it's length. 
+      // Ex: 0000 0067 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 03f6" converts to: uint16_t prontoCode[46] = { 0x0000, 0x0067, 0x0000, 0x0015, 0x0060, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0030, 0x0018, 0x0030, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0018, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0030, 0x0018, 0x0030, 0x0018, 0x0018, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0018, 0x0018, 0x0018, 0x0018, 0x0030, 0x0018, 0x0018, 0x03f6
+      // 
+      // First create array of needed size by:
+      // 1. Counting Spaces
+      // 2. Adding one to account for the last element.
+      std::string::difference_type size = std::count(dataStr.begin(), dataStr.end(), ' '); 
+      size += 1;
+      uint16_t *encodedCommand = new uint16_t[size];
+      // now get space separated values and fill array
+      int pos = 0;
+      std::stringstream ssDataStr(dataStr);
+      while(ssDataStr.good())  {
+        std::string valueAsStr;
+        std::getline(ssDataStr, valueAsStr, ' ');
+        // https://cplusplus.com/reference/string/stoull/
+        data = std::stoull(valueAsStr, &sz, 16);
+        // Serial.printf("  next string value %s (%" PRIu64 ")\r\n", valueStr.c_str(), data);
+        encodedCommand[pos] = data;
+        pos++;
+      }
+
+      Serial.printf("execute: will send IR PRONTO Hex, data %s (%" PRIu64 ")\r\n", dataStr.c_str(), data);
+      IrSender.sendPronto(encodedCommand, size, 0);
       break;
     }
   }
