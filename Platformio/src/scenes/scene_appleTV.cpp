@@ -32,7 +32,7 @@ void scene_setKeys_appleTV() {
     {KEY_OK,          SHORT            },
     {KEY_RIGHT,       SHORT_REPEATED   },
 
-    {KEY_BACK,        SHORT            },
+    // {KEY_BACK,        SHORT            },
     {KEY_DOWN,        SHORT_REPEATED   }, 
     // {KEY_SRC,         SHORT            }, Used by default scene
     
@@ -81,8 +81,6 @@ void scene_setKeys_appleTV() {
     // {KEY_GREEN,        ????             }, Set by default scene
     // {KEY_YELLOW,       ????             }, Set by default scene
     // {KEY_BLUE,         ????             }, Set by default scene
-    
-
   };
   
   key_commands_long_appleTV = {
@@ -97,7 +95,7 @@ void scene_start_sequence_appleTV(void) {
   delay(500);
   executeCommand(APPLETV_POWER_ON);
   delay(500);
-  executeCommand(TV_INPUT_HDMI_1);
+  executeCommand(TV_INPUT_HDMI_2);
   delay(2000);
   executeCommand(APPLETV_HOME);
   delay(3000);

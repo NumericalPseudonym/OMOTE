@@ -7,6 +7,7 @@
 #include "scenes/scene_allOff.h"
 #include "scenes/scene_TV.h"
 #include "scenes/scene_appleTV.h"
+#include "devices/TV/device_TV.h"
 
 uint16_t SCENE_SELECTION;
 std::string scene_name_selection = "sceneSelection";
@@ -63,10 +64,15 @@ void register_scene_defaultKeys(void) {
                                                      /*  {KEY_UP,    COMMAND_UNKNOWN  },*/
                       {KEY_LEFT,  GUI_PREV  },       /*  {KEY_OK,    COMMAND_UNKNOWN  },*/  {KEY_RIGHT, GUI_NEXT  },
                                                      /*  {KEY_DOWN,  COMMAND_UNKNOWN  },*/
-    {KEY_SRC,  SCENE_SELECTION  },                                                                        /*{KEY_BACK,   COMMAND_UNKNOWN  },*/
-    //{KEY_VOLUME_UP, TV_VOL_PLUS  },                      {KEY_MUTE,  TV_MUTE_TOGGLE},                  /*{KEY_CHUP,  COMMAND_UNKNOWN  },*/
-    //{KEY_VOLUME_DOWN, TV_VOL_MINUS },                      {KEY_REC,   SCENE_BACK_TO_PREVIOUS_GUI_LIST  },   /*{KEY_CHDOW, COMMAND_UNKNOWN  },*/
-    {KEY_RED,   SCENE_TV_FORCE   },    /* {KEY_GREEN, SCENE_FIRETV_FORCE},*/    /* {KEY_YELLOW, SCENE_CHROMECAST_FORCE},*/    {KEY_BLUE,  SCENE_APPLETV_FORCE},
+    // {KEY_SRC,  SCENE_SELECTION  },                                                                        /*{KEY_BACK,   COMMAND_UNKNOWN  },*/
+    {KEY_VOLUME_UP, TV_VOL_PLUS  },                      
+    {KEY_VOLUME_DOWN,  TV_VOL_MINUS},                  
+    {KEY_VOLUME_MUTE, TV_VOL_MUTE },                     
+    /* {KEY_REC,   SCENE_BACK_TO_PREVIOUS_GUI_LIST  },   {KEY_CHDOW, COMMAND_UNKNOWN  },*/
+    {KEY_RED,   SCENE_TV_FORCE   },    
+    {KEY_GREEN, SCENE_APPLETV_FORCE},    
+    /* {KEY_YELLOW, SCENE_CHROMECAST_FORCE},*/    
+    {KEY_BLUE,  SCENE_SELECTION},
   };
   
   key_commands_long_default = {

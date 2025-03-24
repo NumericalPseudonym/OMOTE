@@ -23,7 +23,7 @@ void setShowMemoryUsage(bool aShowMemoryUsage) {
 }
 
 void doLogMemoryUsage() {
-  omote_log_v("inside doLogMemoryUsage\r\n");
+  // omote_log_v("inside doLogMemoryUsage\r\n");
   unsigned long systemHeapSize;
   unsigned long freeSystemHeap;
   unsigned long maxAllocSystemHeap;

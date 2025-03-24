@@ -41,21 +41,23 @@
 #include "scenes/scene__default.h"
 #include "scenes/scene_allOff.h"
 #include "scenes/scene_TV.h"
-//#include "scenes/scene_fireTV.h"
-//#include "scenes/scene_chromecast.h"
+// #include "scenes/scene_fireTV.h"
+// #include "scenes/scene_chromecast.h"
 #include "scenes/scene_appleTV.h"
 #include "applicationInternal/scenes/sceneHandler.h"
 
 #if defined(ARDUINO)
 // in case of Arduino we have a setup() and a loop()
-void setup() {
+void setup()
+{
 
 #elif defined(WIN32) || defined(__linux__) || defined(__APPLE__)
 // in case of Windows/Linux, we have only a main() function, no setup() and loop(), so we have to simulate them
 // forward declaration of loop()
 void loop(unsigned long *pIMUTaskTimer, unsigned long *pUpdateStatusTimer);
 // main function as usual in C
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 #endif
 
   // --- Startup ---
@@ -68,11 +70,11 @@ int main(int argc, char *argv[]) {
   init_preferences();
   // blinking led
   init_userled();
-  // startup SD card
-  #if(OMOTE_HARDWARE_REV >= 5)
+// startup SD card
+#if (OMOTE_HARDWARE_REV >= 5)
   // SD card is currently not used, so save some time on startup and don't init the SD card
   // init_SD_card();
-  #endif
+#endif // OMOTE_HARDWARE_REV
 
   // setup IR sender
   init_infraredSender();
@@ -81,26 +83,26 @@ int main(int argc, char *argv[]) {
   register_specialCommands();
   //   TV
   register_device_TV();
-  //register_device_lgTV();
-  //   AV receiver
-  //register_device_yamahaAmp();
-  //register_device_denonAvr();
-  //register_device_lgsoundbar();
-  //   media player
+  // register_device_lgTV();
+  //    AV receiver
+  // register_device_yamahaAmp();
+  // register_device_denonAvr();
+  // register_device_lgsoundbar();
+  //    media player
   register_device_appleTV();
-  //register_device_lgbluray();
-  //register_device_samsungbluray();
-  //register_device_shield();
-  //   misc
-  //register_device_smarthome();
-  //register_device_airconditioner();
+  // register_device_lgbluray();
+  // register_device_samsungbluray();
+  // register_device_shield();
+  //    misc
+  // register_device_smarthome();
+  // register_device_airconditioner();
 
-  #if (ENABLE_KEYBOARD_MQTT == 1)
+#if (ENABLE_KEYBOARD_MQTT == 1)
   register_device_keyboard_mqtt();
-  #endif
-  #if (ENABLE_KEYBOARD_BLE == 1)
+#endif
+#if (ENABLE_KEYBOARD_BLE == 1)
   register_device_keyboard_ble();
-  #endif
+#endif
   register_keyboardCommands();
 
   // Register the GUIs. They will be displayed in the order they have been registered.
@@ -109,27 +111,28 @@ int main(int argc, char *argv[]) {
   register_gui_settings();
   register_gui_appleTV();
   register_gui_numpad();
-  #if (ENABLE_KEYBOARD_BLE == 1)
+#if (ENABLE_KEYBOARD_BLE == 1)
   register_gui_blepairing();
-  #endif
-  //register_gui_smarthome();
-  //register_gui_airconditioner();
-  //register_gui_yamahaAmp();
-  // Only show these GUIs in the main gui list. If you don't set this explicitely, by default all registered guis are shown.
-  #if (USE_SCENE_SPECIFIC_GUI_LIST != 0)
+#endif
+// register_gui_smarthome();
+// register_gui_airconditioner();
+// register_gui_yamahaAmp();
+//  Only show these GUIs in the main gui list. If you don't set this explicitely, by default all registered guis are shown.
+#if (USE_SCENE_SPECIFIC_GUI_LIST != 0)
   main_gui_list =
-    {tabName_sceneSelection, tabName_settings, tabName_irReceiver
-    #if (ENABLE_KEYBOARD_BLE == 1)
-    , tabName_blepairing
-    #endif
-    };
-  #endif
+      {tabName_sceneSelection, tabName_settings, tabName_irReceiver
+#if (ENABLE_KEYBOARD_BLE == 1)
+       ,
+       tabName_blepairing
+#endif
+      };
+#endif
 
   // register the scenes and their key_commands_*
   register_scene_defaultKeys();
   register_scene_TV();
-  //register_scene_fireTV();
-  //register_scene_chromecast();
+  // register_scene_fireTV();
+  // register_scene_chromecast();
   register_scene_appleTV();
   register_scene_allOff();
   // Only show these scenes on the sceneSelection gui. If you don't set this explicitely, by default all registered scenes are shown.
@@ -139,14 +142,14 @@ int main(int argc, char *argv[]) {
   init_gui(); // This has to come before any other i2c devices are initialized, otherwise the i2c bus will not be powered
   setLabelActiveScene();
   gui_loop(); // Run the LVGL UI once before the loop takes over
-  
+
   // Power Pin and battery monitor definition
   init_battery();
 
-  // init BLE keyboard. Has to be after init_gui (because of powered I2C) and after init_battery (because of fuel gauge init)
-  #if (ENABLE_KEYBOARD_BLE == 1)
+// init BLE keyboard. Has to be after init_gui (because of powered I2C) and after init_battery (because of fuel gauge init)
+#if (ENABLE_KEYBOARD_BLE == 1)
   init_keyboardBLE();
-  #endif
+#endif
 
   // setup keyboard matrix driver
   init_keys();
@@ -154,21 +157,20 @@ int main(int argc, char *argv[]) {
   // setup the Inertial Measurement Unit (IMU) for motion detection. Has to be after init_gui(), otherwise I2C will not work
   init_IMU();
 
-  // init WiFi - needs to be after init_gui() because WifiLabel must be available
-  #if (ENABLE_WIFI_AND_MQTT == 1)
+// init WiFi - needs to be after init_gui() because WifiLabel must be available
+#if (ENABLE_WIFI_AND_MQTT == 1)
   init_mqtt();
-  #endif
+#endif
 
   omote_log_i("Setup finished in %lu ms.\r\n", millis());
 
-  #if defined(WIN32) || defined(__linux__) || defined(__APPLE__)
+#if defined(WIN32) || defined(__linux__) || defined(__APPLE__)
   // In Windows/Linux there is no loop function that is automatically being called. So we have to do this on our own infinitely here in main()
   unsigned long IMUTaskTimer = 0;
   unsigned long updateStatusTimer = 0;
   while (1)
     loop(&IMUTaskTimer, &updateStatusTimer);
-  #endif
-
+#endif
 }
 
 // Loop ------------------------------------------------------------------------------------------------------------------------------------
@@ -177,46 +179,49 @@ unsigned long IMUTaskTimer = 0;
 unsigned long updateStatusTimer = 0;
 unsigned long *pIMUTaskTimer = &IMUTaskTimer;
 unsigned long *pUpdateStatusTimer = &updateStatusTimer;
-void loop() {
+void loop()
+{
 #elif defined(WIN32) || defined(__linux__) || defined(__APPLE__)
-void loop(unsigned long *pIMUTaskTimer, unsigned long *pUpdateStatusTimer) {
+void loop(unsigned long *pIMUTaskTimer, unsigned long *pUpdateStatusTimer)
+{
 #endif
 
   // --- do as often as possible --------------------------------------------------------
   // update backlight and keyboard brightness. Fade in on startup, dim before going to sleep
   update_backlightBrightness();
-  #if(OMOTE_HARDWARE_REV >= 5)
-    update_keyboardBrightness();
-  #endif
+#if (OMOTE_HARDWARE_REV >= 5)
+  update_keyboardBrightness();
+#endif
   // keypad handling: get key states from hardware and process them
   keypad_loop();
   // process IR receiver, if activated
-  if (get_irReceiverEnabled()) {
+  if (get_irReceiverEnabled())
+  {
     infraredReceiver_loop();
   }
   // update LVGL UI
   gui_loop();
-  // call mqtt loop to receive mqtt messages, if you are subscribed to some topics
-  #if (ENABLE_WIFI_AND_MQTT == 1)
+// call mqtt loop to receive mqtt messages, if you are subscribed to some topics
+#if (ENABLE_WIFI_AND_MQTT == 1)
   mqtt_loop();
-  #endif
+#endif
 
   // --- every 100 ms -------------------------------------------------------------------
   // Refresh IMU data (motion detection) every 100 ms
   // If no action (key, TFT or motion), then go to sleep
-  if(millis() - *pIMUTaskTimer >= 100){
+  if (millis() - *pIMUTaskTimer >= 100)
+  {
     *pIMUTaskTimer = millis();
 
     check_activity();
-
   }
 
   // --- every 1000 ms ------------------------------------------------------------------
-  if(millis() - *pUpdateStatusTimer >= 1000) {
+  if (millis() - *pUpdateStatusTimer >= 1000)
+  {
     *pUpdateStatusTimer = millis();
 
     // update user_led, battery, BLE, memoryUsage on GUI
     updateHardwareStatusAndShowOnGUI();
   }
-
 }

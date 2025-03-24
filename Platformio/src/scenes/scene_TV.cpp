@@ -18,32 +18,51 @@ std::map<char, uint16_t> key_commands_long_TV;
 
 void scene_setKeys_TV() {
   key_repeatModes_TV = {
-  {KEY_STOP,        SHORT_REPEATED   },
-  {KEY_REWIND,      SHORT            },
-  {KEY_PLAY,        SHORT            },
-  {KEY_FORWARD,     SHORT_REPEATED   },
   {KEY_MENU,        SHORT            },
-  {KEY_INFO,        SHORT            },
   {KEY_UP,          SHORT_REPEATED   },
+  {KEY_INFO,        SHORT            },
   {KEY_LEFT,        SHORT_REPEATED   },
   {KEY_OK,          SHORT            },
   {KEY_RIGHT,       SHORT_REPEATED   },
+  {KEY_BACK,        SHORT            },
   {KEY_DOWN,        SHORT_REPEATED   }, 
-  {KEY_SRC,         SHORT            },
-  {KEY_CHANEL_UP,   SHORT            },
-  {KEY_CHANEL_DOWN, SHORT            },
+  {KEY_VOLUME_UP,   SHORT            },
+  {KEY_VOLUME_DOWN, SHORT            },
+  {KEY_VOLUME_MUTE, SHORT            },
   
   };
   
   key_commands_short_TV = {
   
-    {KEY_MENU,  TV_GUIDE    },
-    {KEY_INFO,  TV_MENU     },
-    {KEY_UP,    TV_UP       },
-    {KEY_LEFT,  TV_LEFT     },
-    {KEY_OK,    TV_SELECT   },
-    {KEY_RIGHT, TV_RIGHT    },
-    {KEY_DOWN,  TV_DOWN     },  
+    // {KEY_STOP,        TV_????     },
+    // {KEY_REWIND,      TV_????   },
+    // {KEY_PLAY,        TV_????      },
+    // {KEY_FORWARD,     TV_????  },
+   
+    {KEY_MENU,        TV_MENU       },
+    {KEY_UP,          TV_UP         },
+    {KEY_INFO,        TV_INFO       },
+    
+    {KEY_LEFT,        TV_LEFT       },
+    {KEY_OK,          TV_SELECT     },
+    {KEY_RIGHT,       TV_RIGHT      },
+
+    {KEY_BACK,        TV_EXIT       },
+    {KEY_DOWN,        TV_DOWN       }, 
+    {KEY_SRC,         TV_OPTION     },
+    
+    {KEY_VOLUME_UP,   TV_VOL_PLUS   },
+    {KEY_VOLUME_DOWN, TV_VOL_MINUS  },
+    {KEY_VOLUME_MUTE, TV_VOL_MUTE   },
+
+    // {KEY_CHANEL_UP,   APPLETV_NEXT      },
+    // {KEY_CHANEL_DOWN, APPLETV_PREVIOUS  },
+    // {KEY_CHANEL_LAST, ????              }, 
+
+    // {KEY_RED,          ????             }, Set by default scene
+    // {KEY_GREEN,        ????             }, Set by default scene
+    // {KEY_YELLOW,       ????             }, Set by default scene
+    // {KEY_BLUE,         ????             }, Set by default scene
   };
   
   key_commands_long_TV = {
@@ -61,7 +80,7 @@ void scene_end_sequence_TV(void) {
 
 }
 
-std::string scene_name_TV = "TV";
+std::string scene_name_TV = "Watch TV";
 t_gui_list scene_TV_gui_list = {tabName_numpad};
 
 void register_scene_TV(void) {

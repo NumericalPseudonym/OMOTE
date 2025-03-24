@@ -5,6 +5,7 @@
 #include "applicationInternal/hardware/hardwarePresenter.h"
 // devices
 #include "devices/TV/device_TV.h"
+#include "devices/mediaPlayer/device_appleTV/device_appleTV.h"
 #include "applicationInternal/commandHandler.h"
 
 uint16_t SCENE_ALLOFF      ; //"Scene_allOff"
@@ -52,11 +53,10 @@ void scene_start_sequence_allOff(void) {
   executeCommand(TV_POWER_OFF);
   delay(500);
   executeCommand(TV_POWER_OFF);
-  // you cannot power off FireTV, but at least you can stop the currently running app
-  executeCommand(KEYBOARD_HOME);
   delay(500);
-  executeCommand(KEYBOARD_HOME);
-
+  executeCommand(APPLETV_HOME);
+  delay(500);
+  executeCommand(APPLETV_POWER_OFF);
 }
 
 void scene_end_sequence_allOff(void) {

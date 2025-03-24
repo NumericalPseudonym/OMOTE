@@ -8,6 +8,9 @@
 // for registering the callback to show WiFi status
 #include "applicationInternal/gui/guiBase.h"
 
+#include "ESP32/keypad_keys_hal_esp32.h"
+
+
 // This include of "hardwareLayer.h" is the one and only link to folder "hardware". The file "hardwareLayer.h" does the differentiation between ESP32 and Windows/Linux.
 // "hardwareLayer.h" includes all the other hardware header files as well. So everything from all hardware header files is available here - and only here.
 // This include has to be here in "hardwarePresenter.cpp" and not in "hardwarePresenter.h". Otherwise the whole rest of the code would have access to the hardware too.

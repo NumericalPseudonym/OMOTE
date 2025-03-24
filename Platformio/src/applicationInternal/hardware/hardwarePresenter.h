@@ -75,6 +75,8 @@ enum IRprotocols {
   IR_PROTOCOL_DENON = 5,
   IR_PROTOCOL_SAMSUNG36 = 6,
   IR_PROTOCOL_PRONTO = 7,
+  IR_PROTOCOL_SONY12 = 8,
+  IR_PROTOCOL_SONY15 = 9,
 };
 void sendIRcode(IRprotocols protocol, std::list<std::string> commandPayloads, std::string additionalPayload);
 
